@@ -1,4 +1,5 @@
 import { AuthProvider, useAuth } from './contexts/AuthContext';
+import { Toaster } from 'sonner';
 import Auth from './components/Auth';
 import Dashboard from './components/Dashboard';
 
@@ -25,6 +26,7 @@ function App() {
   return (
     <AuthProvider>
       <AppContent />
+      <Toaster />
     </AuthProvider>
   );
 }

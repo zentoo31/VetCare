@@ -20,11 +20,12 @@ export default function Auth() {
     try {
       if (isSignUp) {
         await signUp(email, password, fullName, phone);
+        window.location.reload();
       } else {
         await signIn(email, password);
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Ocurrió un error');
+      setError(err instanceof Error ? err.message : 'Ocurrió un error' + err);
     } finally {
       setLoading(false);
     }

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Plus, Edit2, Trash2, X } from 'lucide-react';
 import { supabase, Pet } from '../lib/supabase';
+import { toast } from 'sonner';
 import { useAuth } from '../contexts/AuthContext';
 
 export default function PetManagement() {
@@ -13,6 +14,7 @@ export default function PetManagement() {
     name: '',
     species: '',
     breed: '',
+    custom_breed: '',
     age: '',
     weight: '',
     medical_notes: '',
@@ -47,17 +49,72 @@ export default function PetManagement() {
       setFormData({
         name: pet.name,
         species: pet.species,
+        // If the stored breed matches one of the known breeds we will set it directly,
+        // otherwise store it in custom_breed and set breed to 'otro'.
         breed: pet.breed || '',
+        custom_breed: '',
         age: pet.age?.toString() || '',
         weight: pet.weight?.toString() || '',
         medical_notes: pet.medical_notes || '',
       });
+        // If the pet has a breed that's not empty and doesn't match a popular dog breed,
+        // set the select to 'otro' and put the value into custom_breed. We'll handle this
+        // adjustment after updating state to ensure we have the latest formData.
+        setTimeout(() => {
+          const popularDogBreeds = [
+            'Labrador Retriever',
+            'German Shepherd',
+            'Golden Retriever',
+            'French Bulldog',
+            'Bulldog',
+            'Poodle',
+            'Beagle',
+            'Rottweiler',
+            'Yorkshire Terrier',
+            'Boxer',
+          ];
+          if (pet.breed && !popularDogBreeds.includes(pet.breed) && pet.species === 'perro') {
+            setFormData((fd) => ({ ...fd, breed: 'otro', custom_breed: pet.breed ?? '' }));
+            // If weight empty, attempt to set approximate weight from mapping for custom_breed (unlikely)
+            const approx = breedWeightLookup[pet.breed || ''];
+            if (!pet.weight && approx) {
+              setFormData((fd) => ({ ...fd, weight: approx.toString() }));
+            }
+          } else if (pet.breed && popularDogBreeds.includes(pet.breed) && pet.species === 'perro') {
+            // If breed is one of the popular ones and weight is empty, fill it.
+            const approx = breedWeightLookup[pet.breed];
+            if (!pet.weight && approx) {
+              setFormData((fd) => ({ ...fd, weight: approx.toString() }));
+            }
+          }
+        }, 0);
+      // If the pet has a breed that's not empty and doesn't match a popular dog breed,
+      // set the select to 'otro' and put the value into custom_breed. We'll handle this
+      // adjustment after updating state to ensure we have the latest formData.
+      setTimeout(() => {
+        const popularDogBreeds = [
+          'Labrador Retriever',
+          'German Shepherd',
+          'Golden Retriever',
+          'French Bulldog',
+          'Bulldog',
+          'Poodle',
+          'Beagle',
+          'Rottweiler',
+          'Yorkshire Terrier',
+          'Boxer',
+        ];
+        if (pet.breed && !popularDogBreeds.includes(pet.breed) && pet.species === 'perro') {
+          setFormData((fd) => ({ ...fd, breed: 'otro', custom_breed: pet.breed ?? '' }));
+        }
+      }, 0);
     } else {
       setEditingPet(null);
       setFormData({
         name: '',
         species: '',
         breed: '',
+        custom_breed: '',
         age: '',
         weight: '',
         medical_notes: '',
@@ -75,10 +132,13 @@ export default function PetManagement() {
     e.preventDefault();
 
     try {
+      // Decide which breed to save: if the select is 'otro', use the custom_breed value.
+      const selectedBreed = formData.breed === 'otro' ? formData.custom_breed || '' : formData.breed;
+
       const petData = {
         name: formData.name,
         species: formData.species,
-        breed: formData.breed || null,
+        breed: selectedBreed || null,
         age: formData.age ? parseInt(formData.age) : null,
         weight: formData.weight ? parseFloat(formData.weight) : null,
         medical_notes: formData.medical_notes || '',
@@ -93,15 +153,18 @@ export default function PetManagement() {
           .eq('id', editingPet.id);
 
         if (error) throw error;
+        toast.success('Mascota actualizada');
       } else {
         const { error } = await supabase.from('pets').insert(petData);
         if (error) throw error;
+        toast.success('Mascota creada');
       }
 
       closeModal();
       loadPets();
     } catch (error) {
       console.error('Error saving pet:', error);
+      toast.error('Error guardando la mascota');
     }
   }
 
@@ -114,6 +177,7 @@ export default function PetManagement() {
       loadPets();
     } catch (error) {
       console.error('Error deleting pet:', error);
+      toast.error('Error eliminando la mascota');
     }
   }
 
@@ -125,6 +189,64 @@ export default function PetManagement() {
     hámster: '🐹',
     otro: '🐾',
   };
+
+  // Approximate average weights (kg) for the listed dog breeds.
+  const breedApproxWeight: Record<string, number> = {
+    'Labrador Retriever': 30,
+    'German Shepherd': 35,
+    'Golden Retriever': 30,
+    'French Bulldog': 12,
+    'Bulldog': 23,
+    'Poodle': 22,
+    'Beagle': 10,
+    'Rottweiler': 45,
+    'Yorkshire Terrier': 3,
+    'Boxer': 30,
+  };
+
+  // Breeds per species (simple lists). For non-dog species, include a few common breeds and 'otro'.
+  const breedsBySpecies: Record<string, string[]> = {
+    perro: [
+      'Labrador Retriever',
+      'German Shepherd',
+      'Golden Retriever',
+      'French Bulldog',
+      'Bulldog',
+      'Poodle',
+      'Beagle',
+      'Rottweiler',
+      'Yorkshire Terrier',
+      'Boxer',
+      'otro',
+    ],
+    gato: ['Persa', 'Siamés', 'Maine Coon', 'Bengalí', 'Ragdoll', 'otro'],
+    ave: ['Periquito', 'Cacatúa', 'Loro gris', 'Canario', 'Nanday', 'otro'],
+    conejo: ['Lop', 'Mini Rex', 'Netherland Dwarf', 'otro'],
+    'hámster': ['Siberiano', 'Roborovski', 'Sirio', 'otro'],
+    otro: ['otro'],
+  };
+
+  // Extend approximate weights for some cat/small-animal breeds (kg).
+  const extraApproxWeights: Record<string, number> = {
+    Persa: 4,
+    Siamés: 4,
+    'Maine Coon': 6,
+    Bengalí: 5,
+    Ragdoll: 5,
+    Periquito: 0.05,
+    Cacatúa: 0.8,
+    'Loro gris': 0.5,
+    Canario: 0.02,
+    Lop: 2,
+    'Mini Rex': 2,
+    'Netherland Dwarf': 1,
+    Siberiano: 0.05,
+    Roborovski: 0.03,
+    Sirio: 0.04,
+  };
+
+  // Merge all weight maps into one lookup
+  const breedWeightLookup: Record<string, number> = { ...breedApproxWeight, ...extraApproxWeights };
 
   if (loading) {
     return (
@@ -249,16 +371,16 @@ export default function PetManagement() {
                 <select
                   required
                   value={formData.species}
-                  onChange={(e) => setFormData({ ...formData, species: e.target.value })}
+                  onChange={(e) => {
+                    const newSpecies = e.target.value;
+                    // Reset breed and custom breed and weight when species changes
+                    setFormData({ ...formData, species: newSpecies, breed: '', custom_breed: '', weight: '' });
+                  }}
                   className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                 >
                   <option value="">Seleccionar...</option>
                   <option value="perro">Perro</option>
                   <option value="gato">Gato</option>
-                  <option value="ave">Ave</option>
-                  <option value="conejo">Conejo</option>
-                  <option value="hámster">Hámster</option>
-                  <option value="otro">Otro</option>
                 </select>
               </div>
 
@@ -266,13 +388,39 @@ export default function PetManagement() {
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Raza
                 </label>
-                <input
-                  type="text"
+                {/* Select with 10 popular dog breeds + 'otro' option. If species isn't 'perro', allow empty selection. */}
+                <select
                   value={formData.breed}
-                  onChange={(e) => setFormData({ ...formData, breed: e.target.value })}
+                  onChange={(e) => {
+                    const newBreed = e.target.value;
+                    const approx = breedWeightLookup[newBreed];
+                    if (newBreed !== 'otro' && approx && !formData.weight) {
+                      setFormData({ ...formData, breed: newBreed, weight: approx.toString() });
+                    } else {
+                      setFormData({ ...formData, breed: newBreed });
+                    }
+                  }}
                   className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                  placeholder="Golden Retriever, Persa, etc."
-                />
+                  disabled={!formData.species}
+                >
+                  <option value="">Seleccionar...</option>
+                  {(breedsBySpecies[formData.species || ''] || []).map((b) => (
+                    <option key={b} value={b}>
+                      {b}
+                    </option>
+                  ))}
+                </select>
+
+                {/* If 'otro' is selected, show a text input for custom breed */}
+                {formData.breed === 'otro' && (
+                  <input
+                    type="text"
+                    value={formData.custom_breed}
+                    onChange={(e) => setFormData({ ...formData, custom_breed: e.target.value })}
+                    className="mt-2 w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                    placeholder="Escribe la raza..."
+                  />
+                )}
               </div>
 
               <div className="grid grid-cols-2 gap-4">
