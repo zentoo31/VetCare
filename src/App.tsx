@@ -2,6 +2,7 @@ import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { Toaster } from 'sonner';
 import Auth from './components/Auth';
 import Dashboard from './components/Dashboard';
+import { Loader2 } from 'lucide-react';
 
 function AppContent() {
   const { user, loading } = useAuth();
@@ -10,10 +11,10 @@ function AppContent() {
     return (
       <div className="min-h-screen bg-gradient-to-br from-teal-50 via-cyan-50 to-blue-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="w-16 h-16 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-2xl flex items-center justify-center mx-auto mb-4 animate-pulse">
-            <span className="text-3xl">🐾</span>
+          <div className=" rounded-2xl shadow-sm p-8 flex flex-col items-center justify-center min-h-[260px]">
+            <Loader2 className="animate-spin w-8 h-8 text-teal-500" />
+            <div className="mt-3 text-center text-gray-600">Cargando...</div>
           </div>
-          <p className="text-gray-600">Cargando...</p>
         </div>
       </div>
     );
