@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Calendar, Clock } from 'lucide-react';
+import { DayPicker } from 'react-day-picker';
+import 'react-day-picker/dist/style.css';
 import { supabase, Pet } from '../lib/supabase';
 import { useAuth } from '../contexts/AuthContext';
 
@@ -13,6 +15,7 @@ export default function AppointmentBooking() {
     service_type: '',
     notes: '',
   });
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
@@ -42,7 +45,10 @@ export default function AppointmentBooking() {
     setSuccess(false);
 
     try {
-      const appointmentDate = new Date(`${formData.date}T${formData.time}`);
+      // Use selectedDate (from DayPicker) if available, otherwise fallback to formData.date
+      if (!selectedDate && !formData.date) throw new Error('Selecciona una fecha');
+      const datePart = selectedDate ? selectedDate.toISOString().split('T')[0] : formData.date;
+      const appointmentDate = new Date(`${datePart}T${formData.time}`);
 
       const { error } = await supabase.from('appointments').insert({
         pet_id: formData.pet_id,
@@ -63,6 +69,7 @@ export default function AppointmentBooking() {
         service_type: '',
         notes: '',
       });
+      setSelectedDate(undefined);
 
       setTimeout(() => setSuccess(false), 3000);
     } catch (error) {
@@ -72,7 +79,29 @@ export default function AppointmentBooking() {
     }
   }
 
-  const today = new Date().toISOString().split('T')[0];
+  // (no longer using `today` string; DayPicker uses Date objects)
+
+  // Helper to generate 30-minute time slots between start and end (inclusive start)
+  function generateTimeSlots(start = '08:00', end = '18:00', stepMinutes = 30) {
+    const slots: string[] = [];
+    const [startH, startM] = start.split(':').map(Number);
+    const [endH, endM] = end.split(':').map(Number);
+    let cur = new Date();
+    cur.setHours(startH, startM, 0, 0);
+    const endDate = new Date();
+    endDate.setHours(endH, endM, 0, 0);
+    while (cur <= endDate) {
+      const hh = String(cur.getHours()).padStart(2, '0');
+      const mm = String(cur.getMinutes()).padStart(2, '0');
+      slots.push(`${hh}:${mm}`);
+      cur = new Date(cur.getTime() + stepMinutes * 60000);
+    }
+    return slots;
+  }
+
+  const timeSlots = generateTimeSlots('08:00', '18:00', 30);
+  const todayDate = new Date();
+  todayDate.setHours(0, 0, 0, 0);
 
   return (
     <div className="bg-white rounded-2xl shadow-sm p-6">
@@ -108,36 +137,43 @@ export default function AppointmentBooking() {
           </div>
 
           <div className="grid sm:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Fecha *
-              </label>
-              <div className="relative">
-                <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <input
-                  type="date"
-                  required
-                  min={today}
-                  value={formData.date}
-                  onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                />
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Fecha *</label>
+                <div className="relative">
+                  <Calendar className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+                  <div className="pl-10">
+                    <DayPicker
+                      mode="single"
+                      selected={selectedDate}
+                        onSelect={(date) => {
+                          setSelectedDate(date || undefined);
+                          setFormData({ ...formData, date: date ? date.toISOString().split('T')[0] : '' });
+                        }}
+                        disabled={[{ before: todayDate }, { dayOfWeek: [0] }]}
+                        fromDate={todayDate}
+                      className="react-day-picker"
+                    />
+                  </div>
+                </div>
               </div>
-            </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Hora *
-              </label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Hora *</label>
               <div className="relative">
                 <Clock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <input
-                  type="time"
+                <select
                   required
                   value={formData.time}
                   onChange={(e) => setFormData({ ...formData, time: e.target.value })}
                   className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                />
+                >
+                  <option value="">Selecciona hora...</option>
+                  {timeSlots.map((slot) => (
+                    <option key={slot} value={slot}>
+                      {slot}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
           </div>
@@ -154,10 +190,8 @@ export default function AppointmentBooking() {
             >
               <option value="">Selecciona un servicio...</option>
               <option value="consultation">Consulta General</option>
-              <option value="vaccination">Vacunación</option>
-              <option value="surgery">Cirugía</option>
+              <option value="vaccination">Baños</option>
               <option value="grooming">Peluquería</option>
-              <option value="emergency">Emergencia</option>
             </select>
           </div>
 
