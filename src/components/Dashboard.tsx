@@ -1,11 +1,13 @@
 import { useState } from 'react';
-import { LogOut, Calendar, PawPrint, Home } from 'lucide-react';
+import { LogOut, Calendar, PawPrint, Home, Store } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import PetManagement from './PetManagement';
 import AppointmentBooking from './AppointmentBooking';
 import AppointmentsList from './AppointmentsList';
+import ProductsStore from './ProductsStore';
+import AppointmentHistorial from './AppointmentHistorial';
 
-type View = 'home' | 'pets' | 'appointments';
+type View = 'home' | 'pets' | 'appointments' | 'store' | 'historial';
 
 export default function Dashboard() {
   const { profile, signOut } = useAuth();
@@ -26,7 +28,7 @@ export default function Dashboard() {
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-xl flex items-center justify-center">
-                <span className="text-xl">🐾</span>
+                <img src="/fingerprint.svg" alt="logo" className="w-6 h-6" />
               </div>
               <div>
                 <h1 className="text-xl font-bold text-gray-900">VetCare</h1>
@@ -51,23 +53,32 @@ export default function Dashboard() {
             <div className="bg-white rounded-2xl shadow-sm p-4 space-y-2">
               <button
                 onClick={() => setCurrentView('home')}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-                  currentView === 'home'
-                    ? 'bg-gradient-to-r from-teal-500 to-cyan-600 text-white shadow-md'
-                    : 'text-gray-700 hover:bg-gray-50'
-                }`}
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${currentView === 'home'
+                  ? 'bg-gradient-to-r from-teal-500 to-cyan-600 text-white shadow-md'
+                  : 'text-gray-700 hover:bg-gray-50'
+                  }`}
               >
                 <Home className="w-5 h-5" />
                 <span className="font-medium">Inicio</span>
               </button>
 
               <button
+                onClick={() => setCurrentView('store')}
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${currentView === 'store'
+                  ? 'bg-gradient-to-r from-teal-500 to-cyan-600 text-white shadow-md'
+                  : 'text-gray-700 hover:bg-gray-50'
+                  }`}
+              >
+                <Store className="w-5 h-5" />
+                <span className="font-medium">Tienda</span>
+              </button>
+
+              <button
                 onClick={() => setCurrentView('pets')}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-                  currentView === 'pets'
-                    ? 'bg-gradient-to-r from-teal-500 to-cyan-600 text-white shadow-md'
-                    : 'text-gray-700 hover:bg-gray-50'
-                }`}
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${currentView === 'pets'
+                  ? 'bg-gradient-to-r from-teal-500 to-cyan-600 text-white shadow-md'
+                  : 'text-gray-700 hover:bg-gray-50'
+                  }`}
               >
                 <PawPrint className="w-5 h-5" />
                 <span className="font-medium">Mis Mascotas</span>
@@ -75,15 +86,28 @@ export default function Dashboard() {
 
               <button
                 onClick={() => setCurrentView('appointments')}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-                  currentView === 'appointments'
-                    ? 'bg-gradient-to-r from-teal-500 to-cyan-600 text-white shadow-md'
-                    : 'text-gray-700 hover:bg-gray-50'
-                }`}
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${currentView === 'appointments'
+                  ? 'bg-gradient-to-r from-teal-500 to-cyan-600 text-white shadow-md'
+                  : 'text-gray-700 hover:bg-gray-50'
+                  }`}
               >
                 <Calendar className="w-5 h-5" />
-                <span className="font-medium">Citas</span>
+                <span className="font-medium">Agendar Cita</span>
               </button>
+              <button
+                onClick={() => setCurrentView('historial')}
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${currentView === 'historial'
+                  ? 'bg-gradient-to-r from-teal-500 to-cyan-600 text-white shadow-md'
+                  : 'text-gray-700 hover:bg-gray-50'
+                  }`}
+              >
+                <Calendar className="w-5 h-5" />
+                <span className="font-medium">Historial de Citas</span>
+              </button>
+
+
+
+
             </div>
           </div>
 
@@ -145,6 +169,8 @@ export default function Dashboard() {
                 <AppointmentsList />
               </div>
             )}
+
+            {currentView === 'store' && <ProductsStore />}
           </div>
         </div>
       </div>
