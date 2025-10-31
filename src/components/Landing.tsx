@@ -27,16 +27,16 @@ function Landing() {
                     </nav >
                     <div className="header-icons">
                         <div className="social-icons">
-                            <a href="#" className="social-icon facebook" >
+                            <a href="https://facebook.com/esteticaveterinaria" className="social-icon facebook" target='_blank' >
                                 <img src="/facebook.png" alt="Facebook" />
                             </a>
-                            <a href="#" className="social-icon instagram" >
+                            <a href="https://instagram.com/esteticaveterinaria" className="social-icon instagram" target='_blank' >
                                 <img src="/instagram.png" alt="Instagram" />
                             </a>
-                            <a href="#" className="social-icon tiktok"  >
+                            <a href="https://tiktok.com/@esteticaveterinaria" className="social-icon tiktok"  target='_blank' >
                                 <img src="/tik-tok.png" alt="TikTok" />
                             </a >
-                            <a href="#" className="social-icon whatsapp" >
+                            <a href="https://wa.me/51961433163" className="social-icon whatsapp" target='_blank' >
                                 <img src="/whatsapp.png" alt="WhatsApp" />
                             </a >
                         </div >
