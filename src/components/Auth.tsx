@@ -36,11 +36,11 @@ export default function Auth() {
       <div className="w-full max-w-6xl grid lg:grid-cols-2 gap-8 items-center">
         <div className="hidden lg:block space-y-6">
           <div className="flex items-center gap-3">
-            <div className="w-16 h-16 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-2xl flex items-center justify-center shadow-lg">
-              <Heart className="w-8 h-8 text-white" fill="currentColor" />
+            <div className="w-16 h-16 bg-[#4bbfe8] rounded-2xl flex items-center justify-center shadow-lg">
+              <img src="/logo.png" alt=""  className='w-12 h-12'/>
             </div>
             <div>
-              <h1 className="text-4xl font-bold text-gray-900">VetCare</h1>
+              <h1 className="text-4xl font-bold text-gray-900">Veterinaria Fede y Lu</h1>
               <p className="text-gray-600">Centro Veterinario</p>
             </div>
           </div>
