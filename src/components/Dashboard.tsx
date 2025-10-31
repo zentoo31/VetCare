@@ -27,11 +27,11 @@ export default function Dashboard() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-xl flex items-center justify-center">
-                <img src="/fingerprint.svg" alt="logo" className="w-6 h-6" />
+              <div className="w-10 h-10 bg-[#4bbfe8] rounded-xl flex items-center justify-center">
+                <img src="/logo.png" alt="logo" className="w-8 h-8" />
               </div>
               <div>
-                <h1 className="text-xl font-bold text-gray-900">VetCare</h1>
+                <h1 className="text-xl font-bold text-gray-900">Clínica veterinaria Fede y Lu</h1>
                 <p className="text-xs text-gray-600">Bienvenido, {profile?.full_name}</p>
               </div>
             </div>
@@ -166,11 +166,11 @@ export default function Dashboard() {
             {currentView === 'appointments' && (
               <div className="space-y-6">
                 <AppointmentBooking />
-                <AppointmentsList />
               </div>
             )}
 
             {currentView === 'store' && <ProductsStore />}
+            {currentView === 'historial' && <AppointmentHistorial/>}
           </div>
         </div>
       </div>
