@@ -175,6 +175,8 @@ export default function AppointmentBooking() {
                   ))}
                 </select>
               </div>
+              <label className='block text-sm font-medium text-gray-700 mb-2 mt-2'>Número celular *</label>
+              <input type="number"  className='w-full px-4 py-3 border border-gray-200 rounded-xl' placeholder='+51 999 999 999'/>
             </div>
           </div>
 
