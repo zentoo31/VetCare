@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Calendar, Clock, FileText, X, CheckCircle } from 'lucide-react';
 import { supabase, Appointment, Pet } from '../lib/supabase';
 import { useAuth } from '../contexts/AuthContext';
+import { Loader2 } from 'lucide-react';
 
 type AppointmentWithPet = Appointment & {
   pet: Pet;
@@ -106,8 +107,9 @@ export default function AppointmentsList({ compact = false }: { compact?: boolea
 
   if (loading) {
     return (
-      <div className="bg-white rounded-2xl shadow-sm p-8">
-        <div className="text-center text-gray-600">Cargando citas...</div>
+      <div className="bg-white rounded-2xl shadow-sm p-8 flex flex-col items-center justify-center min-h-[260px]">
+        <Loader2 className="animate-spin w-8 h-8 text-teal-500" />
+        <div className="mt-3 text-center text-gray-600">Cargando...</div>
       </div>
     );
   }
