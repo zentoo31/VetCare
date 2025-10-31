@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Plus, Edit2, Trash2, X } from 'lucide-react';
+import * as Dialog from '@radix-ui/react-dialog';
+import * as AlertDialog from '@radix-ui/react-alert-dialog';
 import { supabase, Pet } from '../lib/supabase';
 import { toast } from 'sonner';
 import { useAuth } from '../contexts/AuthContext';
+import { Loader2 } from 'lucide-react';
 
 export default function PetManagement() {
   const { user } = useAuth();
@@ -10,6 +13,7 @@ export default function PetManagement() {
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [editingPet, setEditingPet] = useState<Pet | null>(null);
+  const [deletingPet, setDeletingPet] = useState<Pet | null>(null);
   const [formData, setFormData] = useState({
     name: '',
     species: '',
@@ -57,37 +61,6 @@ export default function PetManagement() {
         weight: pet.weight?.toString() || '',
         medical_notes: pet.medical_notes || '',
       });
-        // If the pet has a breed that's not empty and doesn't match a popular dog breed,
-        // set the select to 'otro' and put the value into custom_breed. We'll handle this
-        // adjustment after updating state to ensure we have the latest formData.
-        setTimeout(() => {
-          const popularDogBreeds = [
-            'Labrador Retriever',
-            'German Shepherd',
-            'Golden Retriever',
-            'French Bulldog',
-            'Bulldog',
-            'Poodle',
-            'Beagle',
-            'Rottweiler',
-            'Yorkshire Terrier',
-            'Boxer',
-          ];
-          if (pet.breed && !popularDogBreeds.includes(pet.breed) && pet.species === 'perro') {
-            setFormData((fd) => ({ ...fd, breed: 'otro', custom_breed: pet.breed ?? '' }));
-            // If weight empty, attempt to set approximate weight from mapping for custom_breed (unlikely)
-            const approx = breedWeightLookup[pet.breed || ''];
-            if (!pet.weight && approx) {
-              setFormData((fd) => ({ ...fd, weight: approx.toString() }));
-            }
-          } else if (pet.breed && popularDogBreeds.includes(pet.breed) && pet.species === 'perro') {
-            // If breed is one of the popular ones and weight is empty, fill it.
-            const approx = breedWeightLookup[pet.breed];
-            if (!pet.weight && approx) {
-              setFormData((fd) => ({ ...fd, weight: approx.toString() }));
-            }
-          }
-        }, 0);
       // If the pet has a breed that's not empty and doesn't match a popular dog breed,
       // set the select to 'otro' and put the value into custom_breed. We'll handle this
       // adjustment after updating state to ensure we have the latest formData.
@@ -106,8 +79,20 @@ export default function PetManagement() {
         ];
         if (pet.breed && !popularDogBreeds.includes(pet.breed) && pet.species === 'perro') {
           setFormData((fd) => ({ ...fd, breed: 'otro', custom_breed: pet.breed ?? '' }));
+          // If weight empty, attempt to set approximate weight from mapping for custom_breed (unlikely)
+          const approx = breedWeightLookup[pet.breed || ''];
+          if (!pet.weight && approx) {
+            setFormData((fd) => ({ ...fd, weight: approx.toString() }));
+          }
+        } else if (pet.breed && popularDogBreeds.includes(pet.breed) && pet.species === 'perro') {
+          // If breed is one of the popular ones and weight is empty, fill it.
+          const approx = breedWeightLookup[pet.breed];
+          if (!pet.weight && approx) {
+            setFormData((fd) => ({ ...fd, weight: approx.toString() }));
+          }
         }
       }, 0);
+      // (handled above) — no duplicate adjustments needed here
     } else {
       setEditingPet(null);
       setFormData({
@@ -168,12 +153,18 @@ export default function PetManagement() {
     }
   }
 
-  async function handleDelete(id: string) {
-    if (!confirm('¿Estás seguro de eliminar esta mascota?')) return;
+  function handleDelete(pet: Pet) {
+    setDeletingPet(pet);
+  }
+
+  async function confirmDelete() {
+    if (!deletingPet) return;
 
     try {
-      const { error } = await supabase.from('pets').delete().eq('id', id);
+      const { error } = await supabase.from('pets').delete().eq('id', deletingPet.id);
       if (error) throw error;
+      toast.success('Mascota eliminada');
+      setDeletingPet(null);
       loadPets();
     } catch (error) {
       console.error('Error deleting pet:', error);
@@ -250,8 +241,9 @@ export default function PetManagement() {
 
   if (loading) {
     return (
-      <div className="bg-white rounded-2xl shadow-sm p-8">
-        <div className="text-center text-gray-600">Cargando...</div>
+      <div className="bg-white rounded-2xl shadow-sm p-8 flex flex-col items-center justify-center min-h-[260px]">
+        <Loader2 className="animate-spin w-8 h-8 text-teal-500" />
+        <div className="mt-3 text-center text-gray-600">Cargando...</div>
       </div>
     );
   }
@@ -304,7 +296,7 @@ export default function PetManagement() {
                       <Edit2 className="w-4 h-4 text-teal-600" />
                     </button>
                     <button
-                      onClick={() => handleDelete(pet.id)}
+                      onClick={() => handleDelete(pet)}
                       className="p-2 hover:bg-white rounded-lg transition-colors"
                     >
                       <Trash2 className="w-4 h-4 text-red-600" />
@@ -334,19 +326,19 @@ export default function PetManagement() {
         )}
       </div>
 
-      {showModal && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-2xl p-8 max-w-md w-full max-h-[90vh] overflow-y-auto">
+      <Dialog.Root open={showModal} onOpenChange={(open) => { if (!open) closeModal(); else setShowModal(true); }}>
+        <Dialog.Portal>
+          <Dialog.Overlay className="fixed inset-0 bg-black/50" />
+          <Dialog.Content className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-2xl p-8 max-w-md w-full max-h-[90vh] overflow-y-auto z-50">
             <div className="flex justify-between items-center mb-6">
-              <h3 className="text-xl font-bold text-gray-900">
+              <Dialog.Title className="text-xl font-bold text-gray-900">
                 {editingPet ? 'Editar Mascota' : 'Nueva Mascota'}
-              </h3>
-              <button
-                onClick={closeModal}
-                className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-              >
-                <X className="w-5 h-5" />
-              </button>
+              </Dialog.Title>
+              <Dialog.Close asChild>
+                <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors" aria-label="Cerrar">
+                  <X className="w-5 h-5" />
+                </button>
+              </Dialog.Close>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -388,7 +380,6 @@ export default function PetManagement() {
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Raza
                 </label>
-                {/* Select with 10 popular dog breeds + 'otro' option. If species isn't 'perro', allow empty selection. */}
                 <select
                   value={formData.breed}
                   onChange={(e) => {
@@ -411,7 +402,6 @@ export default function PetManagement() {
                   ))}
                 </select>
 
-                {/* If 'otro' is selected, show a text input for custom breed */}
                 {formData.breed === 'otro' && (
                   <input
                     type="text"
@@ -466,13 +456,14 @@ export default function PetManagement() {
               </div>
 
               <div className="flex gap-3 pt-4">
-                <button
-                  type="button"
-                  onClick={closeModal}
-                  className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
-                >
-                  Cancelar
-                </button>
+                <Dialog.Close asChild>
+                  <button
+                    type="button"
+                    className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+                  >
+                    Cancelar
+                  </button>
+                </Dialog.Close>
                 <button
                   type="submit"
                   className="flex-1 bg-gradient-to-r from-teal-500 to-cyan-600 text-white px-4 py-2 rounded-lg hover:shadow-lg transition-all"
@@ -481,9 +472,31 @@ export default function PetManagement() {
                 </button>
               </div>
             </form>
-          </div>
-        </div>
-      )}
+          </Dialog.Content>
+        </Dialog.Portal>
+      </Dialog.Root>
+
+      {/* Radix AlertDialog for confirming deletion */}
+      <AlertDialog.Root open={!!deletingPet} onOpenChange={(open) => { if (!open) setDeletingPet(null); }}>
+        <AlertDialog.Portal>
+          <AlertDialog.Overlay className="fixed inset-0 bg-black/50" />
+          <AlertDialog.Content className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-2xl p-6 max-w-md w-full z-50">
+            <AlertDialog.Title className="text-lg font-semibold">Eliminar mascota</AlertDialog.Title>
+            <AlertDialog.Description className="text-sm text-gray-600 mt-2">
+              ¿Estás seguro que deseas eliminar <span className="font-medium">{deletingPet?.name}</span>? Esta acción no se puede deshacer.
+            </AlertDialog.Description>
+
+            <div className="mt-6 flex justify-end gap-3">
+              <AlertDialog.Cancel asChild>
+                <button className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50">Cancelar</button>
+              </AlertDialog.Cancel>
+              <AlertDialog.Action asChild>
+                <button onClick={confirmDelete} className="px-4 py-2 bg-red-600 text-white rounded-lg hover:shadow">Eliminar</button>
+              </AlertDialog.Action>
+            </div>
+          </AlertDialog.Content>
+        </AlertDialog.Portal>
+      </AlertDialog.Root>
     </div>
   );
 }
