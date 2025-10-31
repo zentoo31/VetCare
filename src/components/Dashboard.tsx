@@ -6,16 +6,19 @@ import AppointmentBooking from './AppointmentBooking';
 import AppointmentsList from './AppointmentsList';
 import ProductsStore from './ProductsStore';
 import AppointmentHistorial from './AppointmentHistorial';
+import { useNavigate } from 'react-router-dom';
 
 type View = 'home' | 'pets' | 'appointments' | 'store' | 'historial';
 
 export default function Dashboard() {
+  const navigator = useNavigate();
   const { profile, signOut } = useAuth();
   const [currentView, setCurrentView] = useState<View>('home');
 
   async function handleSignOut() {
     try {
       await signOut();
+      navigator("/");
     } catch (error) {
       console.error('Error signing out:', error);
     }
