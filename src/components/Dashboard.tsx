@@ -18,7 +18,7 @@ export default function Dashboard() {
   async function handleSignOut() {
     try {
       await signOut();
-      navigator("/");
+      navigator('/');
     } catch (error) {
       console.error('Error signing out:', error);
     }
@@ -56,10 +56,9 @@ export default function Dashboard() {
             <div className="bg-white rounded-2xl shadow-sm p-4 space-y-2">
               <button
                 onClick={() => setCurrentView('home')}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${currentView === 'home'
-                  ? 'bg-gradient-to-r from-teal-500 to-cyan-600 text-white shadow-md'
-                  : 'text-gray-700 hover:bg-gray-50'
-                  }`}
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+                  currentView === 'home' ? 'bg-teal-500 text-white shadow-md' : 'text-gray-700 hover:bg-gray-50'
+                }`}
               >
                 <Home className="w-5 h-5" />
                 <span className="font-medium">Inicio</span>
@@ -67,10 +66,9 @@ export default function Dashboard() {
 
               <button
                 onClick={() => setCurrentView('store')}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${currentView === 'store'
-                  ? 'bg-gradient-to-r from-teal-500 to-cyan-600 text-white shadow-md'
-                  : 'text-gray-700 hover:bg-gray-50'
-                  }`}
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+                  currentView === 'store' ? 'bg-teal-500 text-white shadow-md' : 'text-gray-700 hover:bg-gray-50'
+                }`}
               >
                 <Store className="w-5 h-5" />
                 <span className="font-medium">Tienda</span>
@@ -78,10 +76,9 @@ export default function Dashboard() {
 
               <button
                 onClick={() => setCurrentView('pets')}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${currentView === 'pets'
-                  ? 'bg-gradient-to-r from-teal-500 to-cyan-600 text-white shadow-md'
-                  : 'text-gray-700 hover:bg-gray-50'
-                  }`}
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+                  currentView === 'pets' ? 'bg-teal-500 text-white shadow-md' : 'text-gray-700 hover:bg-gray-50'
+                }`}
               >
                 <PawPrint className="w-5 h-5" />
                 <span className="font-medium">Mis Mascotas</span>
@@ -89,28 +86,24 @@ export default function Dashboard() {
 
               <button
                 onClick={() => setCurrentView('appointments')}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${currentView === 'appointments'
-                  ? 'bg-gradient-to-r from-teal-500 to-cyan-600 text-white shadow-md'
-                  : 'text-gray-700 hover:bg-gray-50'
-                  }`}
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+                  currentView === 'appointments'
+                    ? 'bg-teal-500 text-white shadow-md'
+                    : 'text-gray-700 hover:bg-gray-50'
+                }`}
               >
                 <Calendar className="w-5 h-5" />
                 <span className="font-medium">Agendar Cita</span>
               </button>
               <button
                 onClick={() => setCurrentView('historial')}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${currentView === 'historial'
-                  ? 'bg-gradient-to-r from-teal-500 to-cyan-600 text-white shadow-md'
-                  : 'text-gray-700 hover:bg-gray-50'
-                  }`}
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+                  currentView === 'historial' ? 'bg-teal-500 text-white shadow-md' : 'text-gray-700 hover:bg-gray-50'
+                }`}
               >
                 <Calendar className="w-5 h-5" />
                 <span className="font-medium">Historial de Citas</span>
               </button>
-
-
-
-
             </div>
           </div>
 
@@ -118,12 +111,8 @@ export default function Dashboard() {
             {currentView === 'home' && (
               <div className="space-y-6">
                 <div className="bg-white rounded-2xl shadow-sm p-8">
-                  <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                    Panel de Control
-                  </h2>
-                  <p className="text-gray-600 mb-6">
-                    Gestiona las citas y el cuidado de tus mascotas desde un solo lugar.
-                  </p>
+                  <h2 className="text-2xl font-bold text-gray-900 mb-4">Panel de Control</h2>
+                  <p className="text-gray-600 mb-6">Gestiona las citas y el cuidado de tus mascotas desde un solo lugar.</p>
 
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div className="bg-gradient-to-br from-teal-50 to-cyan-50 p-6 rounded-xl border border-teal-100">
@@ -131,13 +120,8 @@ export default function Dashboard() {
                         <PawPrint className="w-6 h-6 text-teal-600" />
                       </div>
                       <h3 className="font-semibold text-gray-900 mb-1">Registra Mascotas</h3>
-                      <p className="text-sm text-gray-600 mb-4">
-                        Añade información sobre tus mascotas
-                      </p>
-                      <button
-                        onClick={() => setCurrentView('pets')}
-                        className="text-teal-600 hover:text-teal-700 font-medium text-sm"
-                      >
+                      <p className="text-sm text-gray-600 mb-4">Añade información sobre tus mascotas</p>
+                      <button onClick={() => setCurrentView('pets')} className="text-teal-600 hover:text-teal-700 font-medium text-sm">
                         Ir a Mascotas →
                       </button>
                     </div>
@@ -147,13 +131,8 @@ export default function Dashboard() {
                         <Calendar className="w-6 h-6 text-blue-600" />
                       </div>
                       <h3 className="font-semibold text-gray-900 mb-1">Agenda Citas</h3>
-                      <p className="text-sm text-gray-600 mb-4">
-                        Reserva consultas veterinarias
-                      </p>
-                      <button
-                        onClick={() => setCurrentView('appointments')}
-                        className="text-blue-600 hover:text-blue-700 font-medium text-sm"
-                      >
+                      <p className="text-sm text-gray-600 mb-4">Reserva consultas veterinarias</p>
+                      <button onClick={() => setCurrentView('appointments')} className="text-blue-600 hover:text-blue-700 font-medium text-sm">
                         Ver Citas →
                       </button>
                     </div>
@@ -173,10 +152,16 @@ export default function Dashboard() {
             )}
 
             {currentView === 'store' && <ProductsStore />}
-            {currentView === 'historial' && <AppointmentHistorial/>}
+            {currentView === 'historial' && <AppointmentHistorial />}
           </div>
         </div>
       </div>
+
+      <a href="https://wa.me/51961433163" target="_blank" rel="noopener noreferrer" className="fixed right-6 bottom-6 z-50">
+        <img src="/whatsapp.png" alt="WhatsApp" className="w-14 h-14 shadow-lg rounded-full" />
+      </a>
     </div>
   );
 }
+
+                      
