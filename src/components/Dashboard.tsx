@@ -158,7 +158,7 @@ export default function Dashboard() {
       </div>
 
       <a href="https://wa.me/51961433163" target="_blank" rel="noopener noreferrer" className="fixed right-6 bottom-6 z-50">
-        <img src="/whatsapp.png" alt="WhatsApp" className="w-14 h-14 shadow-lg rounded-full" />
+        <img src="/whatsapp-color.png" alt="WhatsApp" className="w-14 h-14 shadow-lg rounded-full" />
       </a>
     </div>
   );
