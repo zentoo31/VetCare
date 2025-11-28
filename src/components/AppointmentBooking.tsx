@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { Calendar, Clock } from 'lucide-react';
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
-import { supabase, Pet } from '../lib/supabase';
+import { supabase } from '../lib/supabase';
+import { Pet } from '../lib/Pet';
 import { useAuth } from '../contexts/AuthContext';
 
 export default function AppointmentBooking() {
