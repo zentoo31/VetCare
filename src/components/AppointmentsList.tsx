@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Calendar, Clock, FileText, X, CheckCircle } from 'lucide-react';
-import { supabase, Appointment, Pet } from '../lib/supabase';
+import { supabase} from '../lib/supabase';
+import { Appointment } from '../lib/Appointment';
+import { Pet } from '../lib/Pet';
 import { useAuth } from '../contexts/AuthContext';
 import { Loader2 } from 'lucide-react';
 
