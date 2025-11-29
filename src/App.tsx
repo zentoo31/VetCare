@@ -1,7 +1,7 @@
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { Toaster } from 'sonner';
-import Auth from './components/Auth';
-import Dashboard from './components/Dashboard';
+import Auth from './pages/Auth';
+import Dashboard from './pages/Dashboard';
 import { Loader2 } from 'lucide-react';
 
 function AppContent() {
