@@ -267,7 +267,7 @@ export default function PetManagement() {
           <h2 className="text-2xl font-bold text-gray-900">Mis Mascotas</h2>
           <button
             onClick={() => openModal()}
-            className="flex items-center gap-2 bg-gradient-to-r from-teal-500 to-cyan-600 text-white px-4 py-2 rounded-xl hover:shadow-lg transition-all"
+            className="flex items-center gap-2 bg-teal-500 text-white px-4 py-2 rounded-xl hover:shadow-lg transition-all"
           >
             <Plus className="w-5 h-5" />
             Nueva Mascota
@@ -527,7 +527,7 @@ export default function PetManagement() {
                 </Dialog.Close>
                 <button
                   type="submit"
-                  className="flex-1 bg-gradient-to-r from-teal-500 to-cyan-600 text-white px-4 py-2 rounded-lg hover:shadow-lg transition-all"
+                  className="flex-1 bg-teal-500 text-white px-4 py-2 rounded-lg hover:shadow-lg transition-all"
                 >
                   {editingPet ? 'Actualizar' : 'Crear'}
                 </button>
