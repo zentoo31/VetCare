@@ -75,7 +75,7 @@ export default function Auth() {
 
         <div className="bg-white rounded-3xl shadow-2xl p-8 lg:p-12">
           <div className="lg:hidden flex items-center justify-center gap-3 mb-8">
-            <div className="w-12 h-12 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-xl flex items-center justify-center">
+            <div className="w-12 h-12 bg-teal-500 rounded-xl flex items-center justify-center">
               <Heart className="w-6 h-6 text-white" fill="currentColor" />
             </div>
             <h1 className="text-2xl font-bold text-gray-900">VetCare</h1>
@@ -161,7 +161,7 @@ export default function Auth() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-gradient-to-r from-teal-500 to-cyan-600 text-white py-3 px-6 rounded-xl font-semibold hover:shadow-lg hover:scale-[1.02] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="w-full bg-teal-500 text-white py-3 px-6 rounded-xl font-semibold hover:shadow-lg hover:scale-[1.02] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
               {loading ? (
                 'Cargando...'
