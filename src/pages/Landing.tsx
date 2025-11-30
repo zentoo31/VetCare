@@ -19,7 +19,7 @@ function Landing() {
                         <ul className="flex gap-8 text-sm font-medium text-slate-700">
                             <li><a href="#inicio" className="hover:text-teal-600">Inicio</a></li>
                             <li><a href="#servicios" className="hover:text-teal-600">Servicios</a></li>
-                            <li><a href="#contacto" className="hover:text-teal-600">Contacto</a></li>
+                            <li><a href="#encuentranos" className="hover:text-teal-600">Encuéntranos</a></li>
                         </ul>
                     </nav>
 
@@ -40,7 +40,6 @@ function Landing() {
                 </div>
             </header>
 
-            {/* Hero */}
             <section className="bg-linear-to-br from-teal-50 via-cyan-50 to-blue-50 py-12">
                 <div className="max-w-6xl mx-auto px-4 md:flex md:items-center md:gap-12">
                     <div className="md:w-1/2 space-y-4 z-10">
@@ -60,6 +59,8 @@ function Landing() {
             </section>
 
             <section id="servicios" className="max-w-6xl mx-auto px-4 py-12">
+                <h3 className="text-2xl font-bold text-slate-900 mb-4">Servicios</h3>
+
                 <div className="max-w-[1100px] mx-auto grid grid-cols-12 gap-4">
                     <Card isFooterBlurred className="w-full h-80 col-span-12 sm:col-span-5 relative">
                         <CardHeader className="absolute z-10 top-4 left-4 flex-col items-start">
@@ -94,7 +95,7 @@ function Landing() {
                         />
                         <CardFooter className="absolute bg-black/40 bottom-0 z-10 border-t border-white/20 px-4 py-3">
                             <div className="flex grow gap-2 items-center">
-                               
+
                                 <div className="flex flex-col">
                                     <p className="text-sm text-white/80">Dermatología</p>
                                     <p className="text-sm text-white/80">Agenda tu consulta hoy.</p>
@@ -124,13 +125,27 @@ function Landing() {
                 </div>
             </section>
 
+            <section id="encuentranos" className="max-w-6xl mx-auto px-4 py-12">
+                <h3 className="text-2xl font-bold text-slate-900 mb-4">Encuéntranos</h3>
+                <div className="w-full rounded-md overflow-hidden shadow">
+                    <iframe
+                        title="Ubicación - Fede y Lu"
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3903.51928938116!2d-77.06467842404503!3d-11.938505439896293!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105d1cc2a5fc16d%3A0xa2def43dc5cf0f9d!2sAv.%20Los%20%C3%81ngeles%20322%2C%20Comas%2015314!5e0!3m2!1ses!2spe!4v1764526085036!5m2!1ses!2spe"
+                        className="w-full h-64 md:h-96 border-0"
+                        allowFullScreen
+                        loading="lazy"
+                        referrerPolicy="no-referrer-when-downgrade"
+                    />
+                </div>
+            </section>
+
             <footer className="bg-teal-500 text-white">
                 <div className="max-w-6xl mx-auto px-4 py-10 grid md:grid-cols-4 gap-6">
                     <div>
                         <h4 className="font-bold">Estética Veterinaria</h4>
                         <p className="mt-2 text-sm">Servicios Estéticos para Mascotas</p>
                         <p className="mt-2 text-sm">Dirección: Av. Los Angeles Nº 322 Sta Luzmila - Comas</p>
-                        <p className="mt-2 text-sm inline-flex items-center gap-2"><img src="/llamar.png" alt="Teléfono" className="w-4 h-4"/> 961 433 163</p>
+                        <p className="mt-2 text-sm inline-flex items-center gap-2"><img src="/llamar.png" alt="Teléfono" className="w-4 h-4" /> 961 433 163</p>
                         <p className="mt-2 text-sm">clinicaveterinariafedeylu@gmail.com</p>
                     </div>
 
@@ -151,11 +166,11 @@ function Landing() {
                     <div>
                         <h4 className="font-bold">Síguenos</h4>
                         <div className="mt-2 flex gap-3">
-                                <a href="https://facebook.com/esteticaveterinaria" target="_blank" rel="noreferrer"><img src="/facebook.png" alt="Facebook" className="w-5 h-5"/></a>
-                                <a href="https://instagram.com/esteticaveterinaria" target="_blank" rel="noreferrer"><img src="/instagram.png" alt="Instagram" className="w-5 h-5"/></a>
-                                <a href="https://tiktok.com/@esteticaveterinaria" target="_blank" rel="noreferrer"><img src="/tik-tok.png" alt="TikTok" className="w-5 h-5"/></a>
-                                <a href="https://wa.me/51961433163" target="_blank" rel="noreferrer"><img src="/whatsapp.png" alt="WhatsApp" className="w-5 h-5"/></a>
-                            </div>
+                            <a href="https://facebook.com/esteticaveterinaria" target="_blank" rel="noreferrer"><img src="/facebook.png" alt="Facebook" className="w-5 h-5" /></a>
+                            <a href="https://instagram.com/esteticaveterinaria" target="_blank" rel="noreferrer"><img src="/instagram.png" alt="Instagram" className="w-5 h-5" /></a>
+                            <a href="https://tiktok.com/@esteticaveterinaria" target="_blank" rel="noreferrer"><img src="/tik-tok.png" alt="TikTok" className="w-5 h-5" /></a>
+                            <a href="https://wa.me/51961433163" target="_blank" rel="noreferrer"><img src="/whatsapp.png" alt="WhatsApp" className="w-5 h-5" /></a>
+                        </div>
                     </div>
                 </div>
 
