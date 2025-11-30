@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { Button, Card, CardHeader, CardFooter, Image } from "@heroui/react";
 
 function Landing() {
     const navigate = useNavigate();
@@ -6,7 +7,7 @@ function Landing() {
     const handleToDashboard = () => navigate('/dashboard');
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-teal-50 via-cyan-50 to-blue-50  text-slate-800">
+        <div className="min-h-screen bg-linear-to-br from-teal-50 via-cyan-50 to-blue-50  text-slate-800">
             <header className="bg-white shadow-md">
                 <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
                     <div className="flex items-center gap-3">
@@ -40,15 +41,15 @@ function Landing() {
             </header>
 
             {/* Hero */}
-            <section className="bg-gradient-to-br from-teal-50 via-cyan-50 to-blue-50 py-12">
+            <section className="bg-linear-to-br from-teal-50 via-cyan-50 to-blue-50 py-12">
                 <div className="max-w-6xl mx-auto px-4 md:flex md:items-center md:gap-12">
                     <div className="md:w-1/2 space-y-4 z-10">
                         <p className=" font-semibold">Priorizamos el bienestar de tu mascota</p>
                         <h1 className="text-4xl md:text-5xl font-bold text-slate-900">Estética Veterinaria</h1>
                         <p className="text-slate-600">Peluquería Canina · Baños Medicados · Hidratados</p>
                         <div className="flex items-center gap-3 mt-4">
-                            <button onClick={handleToDashboard} className="px-6 py-3 rounded-md bg-teal-500 hover:bg-teal-500 text-white font-semibold shadow">Reservar cita</button>
-                            <a href="#servicios" className="px-5 py-3 rounded-md border border-slate-200 bg-white text-teal-600 font-semibold">Ver servicios</a>
+                            <Button onPress={handleToDashboard} className="px-6 py-4 rounded-md bg-teal-500 hover:bg-teal-500 text-white font-semibold shadow cursor-pointer ">Reservar cita</Button>
+                            <a href="#servicios" className="px-5 py-2 rounded-md border border-slate-200 bg-white text-teal-600 font-semibold">Ver servicios</a>
                         </div>
                     </div>
 
@@ -58,47 +59,68 @@ function Landing() {
                 </div>
             </section>
 
-            <section id="servicios" className="max-w-6xl mx-auto px-4 py-12 grid md:grid-cols-2 gap-8">
-                <div className="relative bg-teal-500 text-white rounded-lg p-8 overflow-hidden md:pr-80">
-                    <div className="relative z-20">
-                        <h3 className="text-2xl font-bold">Cortes Profesionales</h3>
-                        <p className="mt-3 text-teal-100">Cortes especializados según la raza y estilo de vida de tu mascota. Técnicas profesionales para resaltar la belleza natural.</p>
-                        <div className="mt-5 flex gap-3">
-                            <button onClick={handleToDashboard} className="px-5 py-2 rounded-md bg-white text-teal-600 font-semibold">Reservar cita</button>
-                        </div>
-                    </div>
+            <section id="servicios" className="max-w-6xl mx-auto px-4 py-12">
+                <div className="max-w-[1100px] mx-auto grid grid-cols-12 gap-4">
+                    <Card isFooterBlurred className="w-full h-80 col-span-12 sm:col-span-5 relative">
+                        <CardHeader className="absolute z-10 top-4 left-4 flex-col items-start">
+                            <p className="text-tiny text-white/60 uppercase font-bold">Nuevo</p>
+                            <h4 className="text-white/90 font-medium text-xl">Cortes</h4>
+                        </CardHeader>
+                        <Image
+                            removeWrapper
+                            alt="Paquetes de cuidado"
+                            className="z-0 w-full h-full scale-105 object-cover"
+                            src="/corte_de_pelo_perros_1024x1024.webp"
+                        />
+                        <CardFooter className="absolute bg-black/40 bottom-0 border-t border-white/20 z-10 justify-between px-4 py-3">
+                            <div>
+                                <p className="text-white/80 text-sm">Peluquería</p>
+                                <p className="text-white/80 text-sm">Incluye corte y baño</p>
+                            </div>
+                            <Button className="text-sm bg-teal-500 text-white/90 " radius="full" size="sm" onPress={handleToDashboard}>Reservar cita</Button>
+                        </CardFooter>
+                    </Card>
 
-                    <div className="hidden md:block">
-                        <div className="absolute top-1/2 right-6 transform -translate-y-1/2 w-80 h-72 rounded-lg overflow-hidden">
-                            <img loading="lazy" src="/corte_de_pelo_perros_1024x1024.webp" alt="Corte de pelo" className="w-full h-full object-cover filter brightness-75 transition-transform duration-300 hover:scale-105 hover:brightness-90" />
-                            <div className="absolute inset-0 bg-black/20 pointer-events-none" />
-                        </div>
-                    </div>
+                    <Card isFooterBlurred className="w-full h-80 col-span-12 sm:col-span-7 relative">
+                        <CardHeader className="absolute z-10 top-4 left-4 flex-col items-start">
+                            <p className="text-tiny text-white/60 uppercase font-bold">NUEVO</p>
+                            <h4 className="text-white/90 font-medium text-xl">Consulta Dermatológica</h4>
+                        </CardHeader>
+                        <Image
+                            removeWrapper
+                            alt="Consulta dermatológica"
+                            className="z-0 w-full h-full object-cover"
+                            src="/DoctorVet-Laser-Therapy-Dermatitis-atopica-del-perro-2-1024x683.jpg"
+                        />
+                        <CardFooter className="absolute bg-black/40 bottom-0 z-10 border-t border-white/20 px-4 py-3">
+                            <div className="flex grow gap-2 items-center">
+                               
+                                <div className="flex flex-col">
+                                    <p className="text-sm text-white/80">Dermatología</p>
+                                    <p className="text-sm text-white/80">Agenda tu consulta hoy.</p>
+                                </div>
+                            </div>
+                            <Button radius="full" size="sm" onPress={handleToDashboard} className='bg-teal-500 text-sm text-white/90 '>Reservar cita</Button>
+                        </CardFooter>
+                    </Card>
+                    <Card className="col-span-12 h-80 relative overflow-hidden mt-4">
+                        <CardHeader className="absolute z-10 top-4 left-6 flex-col items-start">
+                            <p className="text-tiny text-white/70 uppercase font-bold">Atención</p>
+                            <h4 className="text-white font-medium text-2xl">Consulta General</h4>
+                            <p className="mt-2 text-white/90 text-sm max-w-lg">Revisión completa y orientación sobre cuidado en una sola consulta.</p>
+                        </CardHeader>
 
-                    <div className="md:hidden mt-6">
-                        <img loading="lazy" src="/corte_de_pelo_perros_1024x1024.webp" alt="Corte de pelo" className="w-full h-56 object-cover rounded-md filter brightness-80" />
-                    </div>
-                </div>
+                        <Image
+                            removeWrapper
+                            alt="Consulta general"
+                            className="z-0 w-full h-full object-cover filter brightness-70"
+                            src="/purina-esterilización-de-mascotas.avif"
+                        />
 
-                <div className="relative bg-teal-500 text-white rounded-lg p-8 overflow-hidden md:pl-80">
-                    <div className="relative z-20">
-                        <h3 className="text-2xl font-bold mt-3">Tratamientos Dermatológicos</h3>
-                        <p className="mt-3 text-teal-100">Tratamientos para alergias, dermatitis y problemas de piel; terapia láser y seguimiento clínico por nuestro equipo especializado.</p>
-                        <div className="mt-5 flex gap-3">
-                            <button onClick={handleToDashboard} className="px-5 py-2 rounded-md bg-white text-teal-600 font-semibold">Reservar cita</button>
-                        </div>
-                    </div>
-
-                    <div className="hidden md:block">
-                        <div className="absolute top-1/2 left-6 transform -translate-y-1/2 w-80 h-72 rounded-lg overflow-hidden">
-                            <img loading="lazy" src="/DoctorVet-Laser-Therapy-Dermatitis-atopica-del-perro-2-1024x683.jpg" alt="Tratamientos dermatológicos" className="w-full h-full object-cover filter brightness-75 transition-transform duration-300 hover:scale-105 hover:brightness-90" />
-                            <div className="absolute inset-0 bg-black/20 pointer-events-none" />
-                        </div>
-                    </div>
-
-                    <div className="md:hidden mt-6">
-                        <img loading="lazy" src="/DoctorVet-Laser-Therapy-Dermatitis-atopica-del-perro-2-1024x683.jpg" alt="Tratamientos dermatológicos" className="w-full h-56 object-cover rounded-md filter brightness-80" />
-                    </div>
+                        <CardFooter className="absolute bottom-0 z-10 px-4 py-3 justify-end">
+                            <Button radius="full" size="sm" onPress={handleToDashboard} className='bg-teal-500 text-sm text-white/90 '>Reservar cita</Button>
+                        </CardFooter>
+                    </Card>
                 </div>
             </section>
 
