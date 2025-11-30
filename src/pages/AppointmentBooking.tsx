@@ -80,9 +80,6 @@ export default function AppointmentBooking() {
     }
   }
 
-  // (no longer using `today` string; DayPicker uses Date objects)
-
-  // Helper to generate 30-minute time slots between start and end (inclusive start)
   function generateTimeSlots(start = '08:00', end = '18:00', stepMinutes = 30) {
     const slots: string[] = [];
     const [startH, startM] = start.split(':').map(Number);
