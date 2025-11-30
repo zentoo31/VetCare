@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { LogIn, UserPlus, Heart } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { Form, Input, Button } from "@heroui/react";
+import {Link} from "@heroui/link";
 
 export default function Auth() {
   const [isSignUp, setIsSignUp] = useState(false);
@@ -33,12 +34,10 @@ export default function Auth() {
     setError('');
     setValidationErrors({});
 
-    // collect form data (mirrors controlled state but keeps template behaviour)
     const data = Object.fromEntries(new FormData(e.currentTarget) as any) as Record<string, any>;
 
     const newErrors: Record<string, string> = {};
 
-    // basic required checks
     if (isSignUp) {
       if (!data.fullName) newErrors.fullName = 'Por favor ingresa tu nombre completo';
       if (!data.phone) newErrors.phone = 'Por favor ingresa un teléfono';
@@ -101,7 +100,7 @@ export default function Auth() {
           <div className="grid grid-cols-2 gap-4 pt-4">
             <div className="bg-white/70 backdrop-blur-sm p-6 rounded-2xl shadow-sm border border-teal-100">
               <div className="w-12 h-12 bg-teal-100 rounded-xl flex items-center justify-center mb-3">
-                <span className="text-2xl">🐕</span>
+                <span className="text-2xl">📋</span>
               </div>
               <h3 className="font-semibold text-gray-900 mb-1">Agenda Fácil</h3>
               <p className="text-sm text-gray-600">Reserva citas en minutos</p>
@@ -109,10 +108,10 @@ export default function Auth() {
 
             <div className="bg-white/70 backdrop-blur-sm p-6 rounded-2xl shadow-sm border border-cyan-100">
               <div className="w-12 h-12 bg-cyan-100 rounded-xl flex items-center justify-center mb-3">
-                <span className="text-2xl">📋</span>
+                <span className="text-2xl">🛍️</span>
               </div>
-              <h3 className="font-semibold text-gray-900 mb-1">Historial Médico</h3>
-              <p className="text-sm text-gray-600">Todo en un solo lugar</p>
+              <h3 className="font-semibold text-gray-900 mb-1">Comprar Productos</h3>
+              <p className="text-sm text-gray-600">Encuentra accesorios y medicamentos para tu mascota</p>
             </div>
           </div>
         </div>
@@ -157,7 +156,7 @@ export default function Auth() {
                   label="Teléfono"
                   labelPlacement="outside"
                   name="phone"
-                  placeholder="+34 600 000 000"
+                  placeholder="+51 900 000 000"
                   value={phone}
                   onValueChange={setPhone}
                 />
@@ -222,7 +221,7 @@ export default function Auth() {
                 setIsSignUp(!isSignUp);
                 setError('');
               }}
-              className="text-teal-600 hover:text-teal-700 font-medium transition-colors"
+              className="text-teal-600 hover:text-teal-700 font-medium transition-colors underline cursor-pointer"
             >
               {isSignUp
                 ? '¿Ya tienes cuenta? Inicia sesión'
