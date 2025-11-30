@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { LogOut, Calendar, PawPrint, Home, Store } from 'lucide-react';
+import { Button } from '@heroui/react';
 import { useAuth } from '../contexts/AuthContext';
 import PetManagement from './PetManagement';
 import AppointmentBooking from './AppointmentBooking';
@@ -39,13 +40,14 @@ export default function Dashboard() {
               </div>
             </div>
 
-            <button
-              onClick={handleSignOut}
-              className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all"
+            <Button
+              onPress={handleSignOut}
+              variant="bordered" color='danger'
+              className="flex items-center gap-2 px-4 py-2 text-red-700 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all"
             >
               <LogOut className="w-5 h-5" />
               <span className="hidden sm:inline">Cerrar Sesión</span>
-            </button>
+            </Button>
           </div>
         </div>
       </nav>
@@ -54,38 +56,46 @@ export default function Dashboard() {
         <div className="grid lg:grid-cols-4 gap-6">
           <div className="lg:col-span-1">
             <div className="bg-white rounded-2xl shadow-sm p-4 space-y-2">
-              <button
-                onClick={() => setCurrentView('home')}
+              <Button
+                onPress={() => setCurrentView('home')}
+                variant={currentView === 'home' ? 'solid' : 'flat'}
+                color="default"
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
                   currentView === 'home' ? 'bg-teal-500 text-white shadow-md' : 'text-gray-700 hover:bg-gray-50'
                 }`}
               >
                 <Home className="w-5 h-5" />
                 <span className="font-medium">Inicio</span>
-              </button>
+              </Button>
 
-              <button
-                onClick={() => setCurrentView('store')}
+              <Button
+                onPress={() => setCurrentView('store')}
+                variant={currentView === 'store' ? 'solid' : 'flat'}
+                color="default"
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
                   currentView === 'store' ? 'bg-teal-500 text-white shadow-md' : 'text-gray-700 hover:bg-gray-50'
                 }`}
               >
                 <Store className="w-5 h-5" />
                 <span className="font-medium">Tienda</span>
-              </button>
+              </Button>
 
-              <button
-                onClick={() => setCurrentView('pets')}
+              <Button
+                onPress={() => setCurrentView('pets')}
+                variant={currentView === 'pets' ? 'solid' : 'flat'}
+                color="default"
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
                   currentView === 'pets' ? 'bg-teal-500 text-white shadow-md' : 'text-gray-700 hover:bg-gray-50'
                 }`}
               >
                 <PawPrint className="w-5 h-5" />
                 <span className="font-medium">Mis Mascotas</span>
-              </button>
+              </Button>
 
-              <button
-                onClick={() => setCurrentView('appointments')}
+              <Button
+                onPress={() => setCurrentView('appointments')}
+                variant={currentView === 'appointments' ? 'solid' : 'flat'}
+                color="default"
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
                   currentView === 'appointments'
                     ? 'bg-teal-500 text-white shadow-md'
@@ -94,16 +104,18 @@ export default function Dashboard() {
               >
                 <Calendar className="w-5 h-5" />
                 <span className="font-medium">Agendar Cita</span>
-              </button>
-              <button
-                onClick={() => setCurrentView('historial')}
+              </Button>
+              <Button
+                onPress={() => setCurrentView('historial')}
+                variant={currentView === 'historial' ? 'solid' : 'flat'}
+                color="default"
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
                   currentView === 'historial' ? 'bg-teal-500 text-white shadow-md' : 'text-gray-700 hover:bg-gray-50'
                 }`}
               >
                 <Calendar className="w-5 h-5" />
                 <span className="font-medium">Historial de Citas</span>
-              </button>
+              </Button>
             </div>
           </div>
 
@@ -121,9 +133,9 @@ export default function Dashboard() {
                       </div>
                       <h3 className="font-semibold text-gray-900 mb-1">Registra Mascotas</h3>
                       <p className="text-sm text-gray-600 mb-4">Añade información sobre tus mascotas</p>
-                      <button onClick={() => setCurrentView('pets')} className="text-teal-600 hover:text-teal-700 font-medium text-sm">
+                      <Button onPress={() => setCurrentView('pets')} variant="light"  className="text-teal-600 hover:text-teal-700 font-medium text-sm p-0">
                         Ir a Mascotas →
-                      </button>
+                      </Button>
                     </div>
 
                     <div className="bg-linear-to-br from-blue-50 to-cyan-50 p-6 rounded-xl border border-blue-100">
@@ -132,9 +144,9 @@ export default function Dashboard() {
                       </div>
                       <h3 className="font-semibold text-gray-900 mb-1">Agenda Citas</h3>
                       <p className="text-sm text-gray-600 mb-4">Reserva consultas veterinarias</p>
-                      <button onClick={() => setCurrentView('appointments')} className="text-blue-600 hover:text-blue-700 font-medium text-sm">
+                      <Button onPress={() => setCurrentView('appointments')} variant="light" className="cursor-pointer text-blue-600 hover:text-blue-700 font-medium text-sm p-0">
                         Ver Citas →
-                      </button>
+                      </Button>
                     </div>
                   </div>
                 </div>
