@@ -25,7 +25,7 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-teal-50 via-cyan-50 to-blue-50">
+    <div className="min-h-screen bg-linear-to-br from-teal-50 via-cyan-50 to-blue-50">
       <nav className="bg-white shadow-sm border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
@@ -115,7 +115,7 @@ export default function Dashboard() {
                   <p className="text-gray-600 mb-6">Gestiona las citas y el cuidado de tus mascotas desde un solo lugar.</p>
 
                   <div className="grid sm:grid-cols-2 gap-4">
-                    <div className="bg-gradient-to-br from-teal-50 to-cyan-50 p-6 rounded-xl border border-teal-100">
+                    <div className="bg-linear-to-br from-teal-50 to-cyan-50 p-6 rounded-xl border border-teal-100">
                       <div className="w-12 h-12 bg-teal-100 rounded-xl flex items-center justify-center mb-3">
                         <PawPrint className="w-6 h-6 text-teal-600" />
                       </div>
@@ -126,7 +126,7 @@ export default function Dashboard() {
                       </button>
                     </div>
 
-                    <div className="bg-gradient-to-br from-blue-50 to-cyan-50 p-6 rounded-xl border border-blue-100">
+                    <div className="bg-linear-to-br from-blue-50 to-cyan-50 p-6 rounded-xl border border-blue-100">
                       <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-3">
                         <Calendar className="w-6 h-6 text-blue-600" />
                       </div>

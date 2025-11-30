@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { LogIn, UserPlus, Heart } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { Form, Input, Button } from "@heroui/react";
-import {Link} from "@heroui/link";
 
 export default function Auth() {
   const [isSignUp, setIsSignUp] = useState(false);
