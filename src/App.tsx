@@ -9,7 +9,7 @@ function AppContent() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-teal-50 via-cyan-50 to-blue-50 flex items-center justify-center">
+      <div className="min-h-screen bg-linear-to-br from-teal-50 via-cyan-50 to-blue-50 flex items-center justify-center">
         <div className="text-center">
           <div className=" rounded-2xl shadow-sm p-8 flex flex-col items-center justify-center min-h-[260px]">
             <Loader2 className="animate-spin w-8 h-8 text-teal-500" />
