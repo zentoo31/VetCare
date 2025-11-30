@@ -8,6 +8,7 @@ import { toast } from 'sonner';
 import { useAuth } from '../contexts/AuthContext';
 import { Loader2 } from 'lucide-react';
 import { uploadImage } from '../lib/uploadImage';
+import { Button } from '@heroui/react';
 
 export default function PetManagement() {
   const { user } = useAuth();
@@ -264,13 +265,13 @@ export default function PetManagement() {
       <div className="bg-white rounded-2xl shadow-sm p-6">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold text-gray-900">Mis Mascotas</h2>
-          <button
-            onClick={() => openModal()}
+          <Button
+            onPress={() => openModal()}
             className="flex items-center gap-2 bg-teal-500 text-white px-4 py-2 rounded-xl hover:shadow-lg transition-all"
           >
             <Plus className="w-5 h-5" />
             Nueva Mascota
-          </button>
+          </Button>
         </div>
 
         {pets.length === 0 ? (
@@ -291,7 +292,7 @@ export default function PetManagement() {
             {pets.map((pet) => (
               <div
                 key={pet.id}
-                className="bg-gradient-to-br from-teal-50 to-cyan-50 rounded-xl p-6 border border-teal-100 hover:shadow-md transition-shadow"
+                className="bg-linear-to-br from-teal-50 to-cyan-50 rounded-xl p-6 border border-teal-100 hover:shadow-md transition-shadow"
               >
                 <div className="flex justify-between items-start mb-4">
                   <div className="w-14 h-14 bg-white rounded-xl flex items-center justify-center shadow-sm overflow-hidden">
