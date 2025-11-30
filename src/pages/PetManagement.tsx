@@ -29,7 +29,6 @@ export default function PetManagement() {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     if (user) {
       loadPets();
     }
@@ -503,7 +502,6 @@ export default function PetManagement() {
                       <button
                         type="button"
                         onClick={() => {
-                          // remove selection and preview (keeps existing photo_url if editing and no new file selected)
                           setSelectedImageFile(null);
                           setPreviewUrl(editingPet?.photo_url ?? null);
                         }}
@@ -537,7 +535,6 @@ export default function PetManagement() {
         </Dialog.Portal>
       </Dialog.Root>
 
-      {/* Radix AlertDialog for confirming deletion */}
       <AlertDialog.Root open={!!deletingPet} onOpenChange={(open) => { if (!open) setDeletingPet(null); }}>
         <AlertDialog.Portal>
           <AlertDialog.Overlay className="fixed inset-0 bg-black/50" />
