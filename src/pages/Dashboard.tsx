@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { LogOut, Calendar, PawPrint, Home, Store } from 'lucide-react';
+import { LogOut, Calendar, PawPrint, Home, Store, ShoppingCart } from 'lucide-react';
 import { Button } from '@heroui/react';
 import { useAuth } from '../contexts/AuthContext';
 import PetManagement from './PetManagement';
@@ -40,14 +40,21 @@ export default function Dashboard() {
               </div>
             </div>
 
-            <Button
-              onPress={handleSignOut}
-              variant="bordered" color='danger'
-              className="flex items-center gap-2 px-4 py-2 text-red-700 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all"
-            >
-              <LogOut className="w-5 h-5" />
-              <span className="hidden sm:inline">Cerrar Sesión</span>
-            </Button>
+            <div className="flex items-center gap-3">
+              <Button onPress={() => navigator('/cart')} variant="light" className="text-teal-600 hover:text-teal-700 font-medium text-sm px-3 py-2 flex items-center gap-2">
+                <ShoppingCart className="w-5 h-5" />
+                <span className="hidden sm:inline">Carrito</span>
+              </Button>
+
+              <Button
+                onPress={handleSignOut}
+                variant="bordered" color='danger'
+                className="flex items-center gap-2 px-4 py-2 text-red-700 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all"
+              >
+                <LogOut className="w-5 h-5" />
+                <span className="hidden sm:inline">Cerrar Sesión</span>
+              </Button>
+            </div>
           </div>
         </div>
       </nav>
