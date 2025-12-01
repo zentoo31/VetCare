@@ -22,7 +22,7 @@ export default function Cart() {
 
   useEffect(() => {
     const key = import.meta.env.VITE_MP_PUBLIC_KEY as string | undefined;
-    if (key) initMercadoPago(key);
+    if (key) initMercadoPago(key, { locale: 'es-PE' });
   }, []);
 
   async function handleSignOut() {
