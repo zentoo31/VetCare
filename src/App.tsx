@@ -3,6 +3,14 @@ import { Toaster } from 'sonner';
 import Auth from './pages/Auth';
 import Dashboard from './pages/Dashboard';
 import { Loader2 } from 'lucide-react';
+import { Routes, Route, useParams } from 'react-router-dom';
+import ProductDetails from './pages/ProductDetails';
+import Cart from './pages/Cart';
+
+function ProductDetailsWrapper() {
+  const { id } = useParams();
+  return <ProductDetails id={id} />;
+}
 
 function AppContent() {
   const { user, loading } = useAuth();
@@ -20,7 +28,15 @@ function AppContent() {
     );
   }
 
-  return user ? <Dashboard /> : <Auth />;
+  if (!user) return <Auth />;
+
+  return (
+    <Routes>
+      <Route index element={<Dashboard />} />
+      <Route path="product/:id" element={<ProductDetailsWrapper />} />
+      <Route path="cart" element={<Cart />} />
+    </Routes>
+  );
 }
 
 function App() {
