@@ -5,6 +5,7 @@ import 'react-day-picker/dist/style.css';
 import { supabase } from '../lib/supabase';
 import { Pet } from '../lib/Pet';
 import { useAuth } from '../contexts/AuthContext';
+// no imports from HeroUI needed here
 
 export default function AppointmentBooking() {
   const { user } = useAuth();
@@ -21,9 +22,11 @@ export default function AppointmentBooking() {
   const [success, setSuccess] = useState(false);
 
   useEffect(() => {
+    // intentionally only run when `user` changes
     if (user) {
       loadPets();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   async function loadPets() {
@@ -100,7 +103,6 @@ export default function AppointmentBooking() {
   const timeSlots = generateTimeSlots('08:00', '18:00', 30);
   const todayDate = new Date();
   todayDate.setHours(0, 0, 0, 0);
-
   return (
     <div className="bg-white rounded-2xl shadow-sm p-6">
       <h2 className="text-2xl font-bold text-gray-900 mb-6">Agendar Cita</h2>
@@ -217,7 +219,7 @@ export default function AppointmentBooking() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-gradient-to-r from-teal-500 to-cyan-600 text-white py-3 px-6 rounded-xl font-semibold hover:shadow-lg hover:scale-[1.02] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-linear-to-r from-teal-500 to-cyan-600 text-white py-3 px-6 rounded-xl font-semibold hover:shadow-lg hover:scale-[1.02] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? 'Agendando...' : 'Agendar Cita'}
           </button>
