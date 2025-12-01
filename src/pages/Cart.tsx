@@ -1,9 +1,12 @@
 
 import { Button } from '@heroui/react';
-import { Trash2, ShoppingCart, LogOut, ArrowLeft} from 'lucide-react';
+import { Trash2, ShoppingCart, LogOut, ArrowLeft } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { initMercadoPago, Wallet } from '@mercadopago/sdk-react';
 import useCart from '../lib/cartStore';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { supabase } from '../lib/supabase';
 
 export default function Cart() {
   const { profile, signOut } = useAuth();
@@ -13,6 +16,14 @@ export default function Cart() {
   const removeItem = useCart((s) => s.removeItem);
   const updateQuantity = useCart((s) => s.updateQuantity);
   const total = useCart((s) => s.total)();
+  const [preferenceId, setPreferenceId] = useState<string | null>(null);
+  const [checkoutLoading, setCheckoutLoading] = useState(false);
+  const [showWallet, setShowWallet] = useState(false);
+
+  useEffect(() => {
+    const key = import.meta.env.VITE_MP_PUBLIC_KEY as string | undefined;
+    if (key) initMercadoPago(key);
+  }, []);
 
   async function handleSignOut() {
     try {
@@ -107,13 +118,64 @@ export default function Cart() {
                 </div>
                 <div className="flex items-center gap-4">
                   <div className="text-xl font-bold text-gray-900">S./{total.toFixed(2)}</div>
-                  <Button onPress={() => alert('Proceder a compra (placeholder)')} className="bg-teal-500 text-white px-4 py-2 rounded">Proceder a la compra</Button>
+                  <Button
+                    onPress={async () => {
+                      setCheckoutLoading(true);
+                      try {
+                        const payload = items.map((i) => ({
+                          id: i.id,
+                          title: i.name,
+                          quantity: i.quantity,
+                          unit_price: Number(i.price), 
+                        }));
+
+                        const { data, error } = await supabase.functions.invoke(
+                          "preference-id-generator",
+                          {
+                            body: { items: payload },
+                          }
+                        );
+                        console.log("🚀 Supabase response:", data);
+
+
+                        if (error) throw error;
+                        if (!data?.preferenceId) throw new Error("No preference_id returned");
+
+                        setPreferenceId(data.preferenceId);
+                        setShowWallet(true);
+
+                      } catch (err) {
+                        console.error("Checkout error", err);
+                      } finally {
+                        setCheckoutLoading(false);
+                      }
+                    }}
+                    className="bg-teal-500 text-white px-4 py-2 rounded"
+                  >
+                    {checkoutLoading ? "Cargando..." : "Proceder a la compra"}
+                  </Button>
+
                 </div>
               </div>
             </div>
           )}
         </div>
       </div>
+
+      {showWallet && preferenceId && (
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="bg-white rounded-2xl shadow-sm p-6">
+            <h3 className="text-lg font-semibold mb-4">Pago</h3>
+            <div className="min-h-[200px]">
+              <Wallet initialization={{ preferenceId }} />
+            </div>
+            <div className="mt-4 text-right">
+              <Button onPress={() => setShowWallet(false)} className="bg-gray-200 text-gray-800 px-3 py-1 rounded">Cerrar</Button>
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }
