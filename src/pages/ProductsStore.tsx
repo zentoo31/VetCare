@@ -5,6 +5,8 @@ import { toast } from 'sonner';
 import { Product } from '../lib/Product';
 import { supabase } from '../lib/supabase';
 import {Select, SelectItem, Input} from "@heroui/react";
+import { useNavigate } from 'react-router-dom';
+import { useCart } from '../lib/cartStore';
 
 const PRODUCT_TYPES = ['food', 'toys', 'accessories', 'medicine', 'other'];
 
@@ -48,12 +50,16 @@ export default function ProductsStore() {
     const [filterType, setFilterType] = useState('');
 
     const addToCart = (p: Product) => {
-        setProducts2((cur) => cur);
+        const add = useCart.getState().addItem;
+        add({ id: p.id, name: p.name, price: p.price, image: p.image, quantity: 1 });
         toast.success(`${p.name} agregado al carrito`);
     };
 
+    const navigate = useNavigate();
+
     const viewMore = (p: Product) => {
-        toast(`${p.name} — $${p.price.toFixed(2)} • Tipo: ${p.type}`);
+        // navigate to product details route under /dashboard
+        navigate(`/dashboard/product/${p.id}`);
     };
 
     const filtered = useMemo(() => {
