@@ -5,39 +5,18 @@ const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-export type Profile = {
-  id: string;
-  email: string;
-  full_name: string;
-  phone: string | null;
-  role: 'client' | 'admin';
-  created_at: string;
-  updated_at: string;
-};
+export async function crearPreferencia(data: any) {
+  const { data: response, error } = await supabase.functions.invoke(
+    "preference-id-generator",
+    {
+      body: data,
+    }
+  );
 
-export type Pet = {
-  id: string;
-  owner_id: string;
-  name: string;
-  species: string;
-  breed: string | null;
-  age: number | null;
-  weight: number | null;
-  photo_url: string | null;
-  medical_notes: string;
-  created_at: string;
-  updated_at: string;
-};
+  if (error) {
+    console.error("Error invocando función:", error);
+    return null;
+  }
 
-export type Appointment = {
-  id: string;
-  pet_id: string;
-  owner_id: string;
-  appointment_date: string;
-  service_type: 'consultation' | 'vaccination' | 'surgery' | 'grooming' | 'emergency';
-  status: 'pending' | 'confirmed' | 'completed' | 'cancelled';
-  notes: string;
-  veterinarian_notes: string;
-  created_at: string;
-  updated_at: string;
-};
+  return response;
+}
