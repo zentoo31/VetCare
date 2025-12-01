@@ -367,7 +367,7 @@ export default function PetManagement() {
                   required
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                  className="w-full px-4 py-2  border border-gray-200 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                   placeholder="Max, Luna, etc."
                 />
               </div>
