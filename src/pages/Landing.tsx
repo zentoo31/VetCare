@@ -24,10 +24,10 @@ function Landing() {
                     </nav>
 
                     <div className="flex items-center gap-3">
-                        <a href="https://facebook.com/esteticaveterinaria" target="_blank" rel="noreferrer" className="p-2 rounded-full bg-slate-100">
+                        <a href="https://www.facebook.com/veterinaria.fedeylu/?locale=es_LA" target="_blank" rel="noreferrer" className="p-2 rounded-full bg-slate-100">
                             <img src="/facebook.png" alt="Facebook" className="w-5 h-5" />
                         </a>
-                        <a href="https://instagram.com/esteticaveterinaria" target="_blank" rel="noreferrer" className="p-2 rounded-full bg-slate-100">
+                        <a href="https://www.instagram.com/clinicaveterinariafedeylu/?hl=es" target="_blank" rel="noreferrer" className="p-2 rounded-full bg-slate-100">
                             <img src="/instagram.png" alt="Instagram" className="w-5 h-5" />
                         </a>
                         <a href="https://tiktok.com/@esteticaveterinaria" target="_blank" rel="noreferrer" className="p-2 rounded-full bg-slate-100">
@@ -166,8 +166,8 @@ function Landing() {
                     <div>
                         <h4 className="font-bold">Síguenos</h4>
                         <div className="mt-2 flex gap-3">
-                            <a href="https://facebook.com/esteticaveterinaria" target="_blank" rel="noreferrer"><img src="/facebook.png" alt="Facebook" className="w-5 h-5" /></a>
-                            <a href="https://instagram.com/esteticaveterinaria" target="_blank" rel="noreferrer"><img src="/instagram.png" alt="Instagram" className="w-5 h-5" /></a>
+                            <a href="https://www.facebook.com/veterinaria.fedeylu/?locale=es_LA" target="_blank" rel="noreferrer"><img src="/facebook.png" alt="Facebook" className="w-5 h-5" /></a>
+                            <a href="https://www.instagram.com/clinicaveterinariafedeylu/?hl=es" target="_blank" rel="noreferrer"><img src="/instagram.png" alt="Instagram" className="w-5 h-5" /></a>
                             <a href="https://tiktok.com/@esteticaveterinaria" target="_blank" rel="noreferrer"><img src="/tik-tok.png" alt="TikTok" className="w-5 h-5" /></a>
                             <a href="https://wa.me/51961433163" target="_blank" rel="noreferrer"><img src="/whatsapp.png" alt="WhatsApp" className="w-5 h-5" /></a>
                         </div>

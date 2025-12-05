@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { LogIn, UserPlus, Heart } from 'lucide-react';
+import { LogIn, UserPlus } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { Form, Input, Button } from "@heroui/react";
 
@@ -117,10 +117,10 @@ export default function Auth() {
 
         <div className="bg-white rounded-3xl shadow-2xl p-8 lg:p-12">
           <div className="lg:hidden flex items-center justify-center gap-3 mb-8">
-            <div className="w-12 h-12 bg-teal-500 rounded-xl flex items-center justify-center">
-              <Heart className="w-6 h-6 text-white" fill="currentColor" />
-            </div>
-            <h1 className="text-2xl font-bold text-gray-900">VetCare</h1>
+            <div className="w-16 h-16 bg-[#4bbfe8] rounded-2xl flex items-center justify-center shadow-lg">
+              <img src="/logo.png" alt="" className='w-12 h-12' />
+            </div>  
+              <h1 className="text-2xl font-bold text-gray-900">Veterinaria Fede y Lu</h1>
           </div>
 
           <div className="text-center mb-8">
