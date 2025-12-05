@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { LogIn, UserPlus, Heart } from 'lucide-react';
+import { LogIn, UserPlus } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { Form, Input, Button } from "@heroui/react";
 
