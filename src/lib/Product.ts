@@ -4,6 +4,6 @@ export type Product = {
   description?: string;
   name: string;
   price: number;      
-  type: 'food' | 'toys' | 'accessories' | 'medicine' | 'other';
+  type: 'food' | 'toys' | 'accessories' | 'medicine' | 'other' | 'leeby' | 'hartz';
   image: string;
 };
