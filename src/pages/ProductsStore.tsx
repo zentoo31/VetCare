@@ -8,7 +8,7 @@ import {Select, SelectItem, Input} from "@heroui/react";
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../lib/cartStore';
 
-const PRODUCT_TYPES = ['food', 'toys', 'accessories', 'medicine', 'other'];
+const PRODUCT_TYPES = ['food', 'toys', 'accessories', 'medicine', 'other', 'leeby', 'hartz'];
 
 export default function ProductsStore() {
     const [products2, setProducts2] = useState<Product[]>([]);
